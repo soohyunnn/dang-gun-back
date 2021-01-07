@@ -17,7 +17,7 @@ CREATE TABLE `post`
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(30) NOT NULL,
   `content` varchar(4000) NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` int NULL,
   `like_cnt` int NOT NULL DEFAULT '0',
   `view_cnt` int NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
