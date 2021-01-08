@@ -1,5 +1,6 @@
 package dang.gun.com.post;
 
+import dang.gun.com.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
