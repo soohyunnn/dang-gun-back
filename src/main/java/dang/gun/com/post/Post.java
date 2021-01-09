@@ -17,6 +17,7 @@ public class Post {
      * id : 게시글 고유 번호
      * title : 제목
      * content : 내용
+     * price : 금액
      * view_cnt : 조회 수
      * like_cnt : 좋아요 수
      * created_at : 등록날짜
@@ -29,6 +30,7 @@ public class Post {
     int id;
     String title;
     String content;
+    int price;
     int view_cnt;
     int like_cnt;
     LocalDateTime created_at;

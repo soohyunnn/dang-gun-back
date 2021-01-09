@@ -1,5 +1,7 @@
 package dang.gun.com.post;
 
+import dang.gun.com.image.Image;
+import dang.gun.com.image.ImageService;
 import dang.gun.com.user.User;
 import dang.gun.com.user.UserService;
 import org.assertj.core.api.Assertions;
@@ -27,6 +29,7 @@ class PostControllerTest {
 
     @Autowired PostService postService;
     @Autowired UserService userService;
+    @Autowired ImageService imageService;
 
     @Test
     public void save() throws ParseException {
@@ -53,6 +56,7 @@ class PostControllerTest {
         post.setId(1);
         post.setTitle("Test한다잉");
         post.setContent("잘 들어가야할텐데 말이지");
+        post.setPrice(100000);
         post.setView_cnt(0);
         post.setLike_cnt(0);
         post.setCreated_at(now);
@@ -64,6 +68,18 @@ class PostControllerTest {
         //System.out.println("post::"+post.getUser_id());
 
         int post_id = postService.save(post);
+
+        Image image = new Image();
+        image.setId(1);
+        image.setImgname("라이언");
+        image.setImgpath("/img/라이언.png");
+        image.setImgtype("image/png");
+        image.setCreated_at(now);
+        image.setModified_at(now);
+        image.setRemoved_at(now);
+        image.setPost(post);
+
+        int image_id = imageService.save(image);
 
         Post post1 = postService.findOne(post_id).get();
         assertThat(post.getTitle()).isEqualTo(post1.getTitle());
