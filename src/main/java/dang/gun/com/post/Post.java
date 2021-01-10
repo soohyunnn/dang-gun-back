@@ -1,5 +1,6 @@
 package dang.gun.com.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dang.gun.com.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class Post {
     LocalDateTime removed_at;
     //int user_id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
