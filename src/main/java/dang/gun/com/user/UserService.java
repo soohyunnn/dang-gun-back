@@ -20,8 +20,8 @@ public class UserService {
 
     public List<User> getByEmail(String email){
         System.out.println("email = " + email);
-        System.out.println("aaa::"+userRepository.findAllByEmail(email));
-        return userRepository.findAllByEmail(email);
+        System.out.println("aaa::"+userRepository.findByEmail(email));
+        return userRepository.findByEmail(email);
     }
 
     public List<User> findAll(){
