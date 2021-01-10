@@ -1,5 +1,6 @@
 package dang.gun.com.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dang.gun.com.post.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class User {
     LocalDateTime modified_at;
     LocalDateTime removed_at;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts = new ArrayList<Post>();
 }
