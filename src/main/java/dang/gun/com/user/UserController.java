@@ -40,41 +40,18 @@ public class UserController {
      */
     @ResponseBody
     @GetMapping("/user/selectedUser")
-     public JSONObject getByEmail(@RequestParam(value="email") String email) {
+     public ResponseEntity getByEmail(@RequestParam(value="email") String email) {
         System.out.println("UserController.getByEmail");
         System.out.println("email = " + email);
-        JSONObject json = new JSONObject();
-        try{
-            List<User> user = userService.getByEmail(email);
-            System.out.println("user = " + user);
-            json.put("result", "SUCCESS");
-            json.put("data", user);
-            return json;
-        } catch (Exception e){
-            e.printStackTrace();
-            json.put("result", "FAIL");
-            return json;
-        }
+        List<User> user = userService.getByEmail(email);
+        return ResponseEntity.ok(user);
      }
 
      @ResponseBody
      @GetMapping("/users")
-     public JSONObject hello(){
-        JSONObject json = new JSONObject();
-
-        try{
-            List<User> users = userService.findAll();
-            System.out.println("user = " + users);
-            json.put("result", "SUCCESS");
-            json.put("data", users);
-            return json;
-        } catch (Exception e){
-            e.printStackTrace();
-            json.put("result", "FAIL");
-            return json;
-        }
-
-
+     public ResponseEntity hello() {
+         List<User> users = userService.findAll();
+         return ResponseEntity.ok(users);
      }
 
 }
