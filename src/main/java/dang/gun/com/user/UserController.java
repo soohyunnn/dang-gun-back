@@ -1,5 +1,6 @@
 package dang.gun.com.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Slf4j
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
@@ -20,17 +22,16 @@ public class UserController {
 
     /**
      * 회원가입
-     * @param user
+     * @param userSingupDto
      * @param request
      * @return
      */
-    @PostMapping("/user/save")
-    public ResponseEntity<String> save(User user, HttpServletRequest request){
-
-        userService.save(user);
-
-        //클라이언트 정보 - ip 주소 반환
-        return ResponseEntity.ok(request.getRemoteAddr());
+    @PostMapping("/users/singup")
+    @ResponseBody
+    public ResponseEntity<UserSingupDto> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request){
+        log.info("singup Start");
+        userService.singup(userSingupDto);
+        return ResponseEntity.ok(userSingupDto);
     }
 
     /**
@@ -39,7 +40,7 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @GetMapping("/user/selectedUser")
+    @GetMapping("/users/selectedUser")
      public ResponseEntity getByEmail(@RequestParam(value="email") String email) {
         System.out.println("UserController.getByEmail");
         System.out.println("email = " + email);
