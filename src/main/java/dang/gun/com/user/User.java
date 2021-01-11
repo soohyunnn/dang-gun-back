@@ -30,8 +30,9 @@ public class User {
      */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-
+    @Column(unique = true)
     String email;
+    @Column(unique = true)
     String username;
     String password;
     String prev_password;
