@@ -36,7 +36,7 @@ public class User {
     String username;
     String password;
     String prev_password;
-    String addressnummber;
+    String addressnumber;
     String detailaddress;
     LocalDateTime created_at;
     LocalDateTime modified_at;
@@ -54,7 +54,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", prev_password='" + prev_password + '\'' +
-                ", addressnummber='" + addressnummber + '\'' +
+                ", addressnummber='" + addressnumber + '\'' +
                 ", detailaddress='" + detailaddress + '\'' +
                 ", created_at=" + created_at +
                 ", modified_at=" + modified_at +

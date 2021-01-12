@@ -1,0 +1,1 @@
+ALTER TABLE user change address detailaddress varchar(240);
