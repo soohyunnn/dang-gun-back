@@ -6,7 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +35,7 @@ public class UserController {
      */
     @PostMapping("/users/singup")
     @ResponseBody
-    public ResponseEntity<UserSingupDto> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request){
+    public ResponseEntity<UserSingupDto> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request) throws NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         log.info("singup Start");
         userService.singup(userSingupDto);
         return ResponseEntity.ok(userSingupDto);

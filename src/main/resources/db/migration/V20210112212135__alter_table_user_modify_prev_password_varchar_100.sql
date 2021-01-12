@@ -1,0 +1,1 @@
+alter table user modify prev_password varchar(100);
