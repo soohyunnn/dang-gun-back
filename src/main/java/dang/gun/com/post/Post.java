@@ -37,7 +37,6 @@ public class Post {
     LocalDateTime created_at;
     LocalDateTime modified_at;
     LocalDateTime removed_at;
-    //int user_id;
 
     @JsonIgnore
     @ManyToOne
