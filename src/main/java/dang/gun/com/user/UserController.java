@@ -5,14 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Slf4j
@@ -30,21 +22,13 @@ public class UserController {
     /**
      * 회원가입
      * @param userSingupDto
-     * @param request
      * @return
      */
     @PostMapping("/singup")
     @ResponseBody
-    public ResponseEntity<String> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request) throws NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        ResponseEntity<String> entity = null;
-        try{
+    public ResponseEntity singup(@RequestBody UserSingupDto userSingupDto) {
             userService.singup(userSingupDto);
-            entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return entity;
+        return ResponseEntity.ok("SUCCESS");
     }
 
     /**
@@ -53,10 +37,22 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @GetMapping("/selectedUser")
+    @GetMapping()
      public ResponseEntity<List> findByEmail(@RequestParam(value="email") String email) {
         List<User> user = userService.findByEmail(email);
         return ResponseEntity.ok(user);
+     }
+
+    /**
+     * 로그인
+     * @param userSingupDto
+     * @return
+     */
+     @PostMapping("/singin")
+     @ResponseBody
+     public ResponseEntity singin(@RequestBody UserSingupDto userSingupDto) {
+             //userService.singup(userSingupDto);
+         return ResponseEntity.ok("SUCCESS");
      }
 
 }
