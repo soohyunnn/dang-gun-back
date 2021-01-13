@@ -20,7 +20,7 @@ public class User {
      * id : 회원 고유 번호
      * email : 이메일
      * username : 아이
-     * password : 비밀번호디
+     * password : 비밀번호
      * addressnummber : 우편번호
      * detailaddress : 상세주소
      * prev_password : 이전 비밀번호
@@ -35,31 +35,20 @@ public class User {
     @Column(unique = true)
     String username;
     String password;
-    String prev_password;
-    String addressnumber;
-    String detailaddress;
-    LocalDateTime created_at;
-    LocalDateTime modified_at;
-    LocalDateTime removed_at;
+    @Column(name="prev_password")
+    String prevPassword;
+    @Column(name="addressnumber")
+    String addressNumber;
+    @Column(name="detailaddress")
+    String detailAddress;
+    @Column(name="created_at")
+    LocalDateTime createdAt;
+    @Column(name="modified_at")
+    LocalDateTime modifiedAt;
+    @Column(name="removed_at")
+    LocalDateTime removedAt;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts = new ArrayList<Post>();
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", prev_password='" + prev_password + '\'' +
-                ", addressnummber='" + addressnumber + '\'' +
-                ", detailaddress='" + detailaddress + '\'' +
-                ", created_at=" + created_at +
-                ", modified_at=" + modified_at +
-                ", removed_at=" + removed_at +
-                ", posts=" + posts +
-                '}';
-    }
 }

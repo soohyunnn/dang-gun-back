@@ -1,9 +1,8 @@
 package dang.gun.com.user;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.BadPaddingException;
@@ -18,6 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping(value = "/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
@@ -33,12 +33,18 @@ public class UserController {
      * @param request
      * @return
      */
-    @PostMapping("/users/singup")
+    @PostMapping("/singup")
     @ResponseBody
-    public ResponseEntity<UserSingupDto> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request) throws NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        log.info("singup Start");
-        userService.singup(userSingupDto);
-        return ResponseEntity.ok(userSingupDto);
+    public ResponseEntity<String> singup(@RequestBody UserSingupDto userSingupDto, HttpServletRequest request) throws NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        ResponseEntity<String> entity = null;
+        try{
+            userService.singup(userSingupDto);
+            entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
     }
 
     /**
@@ -47,19 +53,10 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @GetMapping("/users/selectedUser")
-     public ResponseEntity getByEmail(@RequestParam(value="email") String email) {
-        System.out.println("UserController.getByEmail");
-        System.out.println("email = " + email);
-        List<User> user = userService.getByEmail(email);
+    @GetMapping("/selectedUser")
+     public ResponseEntity<List> findByEmail(@RequestParam(value="email") String email) {
+        List<User> user = userService.findByEmail(email);
         return ResponseEntity.ok(user);
-     }
-
-     @ResponseBody
-     @GetMapping("/users")
-     public ResponseEntity hello() {
-         List<User> users = userService.findAll();
-         return ResponseEntity.ok(users);
      }
 
 }
