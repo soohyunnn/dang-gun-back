@@ -4,13 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +19,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public int singup(UserSingupDto userSingupDto) throws NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    public int singup(UserSingupDto userSingupDto){
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
 
@@ -52,8 +45,13 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public User singin(UserSingupDto userSingupDto) {
+        User user = (User) userRepository.findByEmail(userSingupDto.email);
+        if(user != null){
+            passwordEncoder.matches(userSingupDto.password, user.getPassword());
+            return user;
+        }
+        return null;
     }
 
 }

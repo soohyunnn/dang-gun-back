@@ -19,7 +19,7 @@ public class User {
     /**
      * id : 회원 고유 번호
      * email : 이메일
-     * username : 아이
+     * username : 아이디
      * password : 비밀번호
      * addressnummber : 우편번호
      * detailaddress : 상세주소
