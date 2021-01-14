@@ -11,7 +11,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    public void save(Post post){
+    public void save(Post post) {
         postService.save(post);
     }
 }

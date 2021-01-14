@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 @Slf4j
@@ -13,7 +14,8 @@ public class ExceptionController {
 
     //400
     @ExceptionHandler({RuntimeException.class})
-    public ResponseEntity<Object> BadRequestException(final RuntimeException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity BadRequestException(final Exception ex) {
         log.warn("error", ex);
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
@@ -24,6 +26,7 @@ public class ExceptionController {
         log.warn("error", ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
+
 
     //500
     @ExceptionHandler({Exception.class})

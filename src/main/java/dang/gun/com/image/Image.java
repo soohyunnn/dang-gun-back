@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name="image")
+@Table(name = "image")
 public class Image {
 
     @Id
@@ -26,7 +26,7 @@ public class Image {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="post_id")
+    @JoinColumn(name = "post_id")
     Post post;
 
 }
