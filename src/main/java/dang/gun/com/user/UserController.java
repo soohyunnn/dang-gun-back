@@ -1,13 +1,13 @@
 package dang.gun.com.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
+@Slf4j
 @RestController
+@RequestMapping(value = "/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -18,17 +18,40 @@ public class UserController {
 
     /**
      * 회원가입
-     * @param user
-     * @param request
+     *
+     * @param userSingupDto
      * @return
      */
-    @PostMapping("/user/save")
-    public ResponseEntity<String> save(User user, HttpServletRequest request){
+    @PostMapping("/signup")
+    @ResponseBody
+    public ResponseEntity signup(@RequestBody UserSingupDto userSingupDto) {
+        userService.signup(userSingupDto);
+        return ResponseEntity.ok("SUCCESS");
+    }
 
-        userService.save(user);
+    /**
+     * 중복회원조회
+     *
+     * @param email
+     * @return
+     */
+    @ResponseBody
+    @GetMapping
+    public ResponseEntity<Boolean> isExistingUserByEmail(@RequestParam(value = "email") String email) {
+        return ResponseEntity.ok(userService.isExistingUserByEmail(email));
+    }
 
-        //클라이언트 정보 - ip 주소 반환
-        return ResponseEntity.ok(request.getRemoteAddr());
+    /**
+     * 로그인
+     *
+     * @param userSingupDto
+     * @return
+     */
+    @PostMapping("/signin")
+    @ResponseBody
+    public ResponseEntity signin(@RequestBody UserSingupDto userSingupDto) {
+        userService.signin(userSingupDto);
+        return ResponseEntity.ok("SUCCESS");
     }
 
 }
