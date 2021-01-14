@@ -1,5 +1,6 @@
 package dang.gun.com.image;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dang.gun.com.post.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name="image")
+@Table(name = "image")
 public class Image {
 
     @Id
@@ -23,8 +24,9 @@ public class Image {
     LocalDateTime modified_at;
     LocalDateTime removed_at;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="post_id")
+    @JoinColumn(name = "post_id")
     Post post;
 
 }

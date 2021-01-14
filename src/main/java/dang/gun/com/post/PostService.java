@@ -1,6 +1,5 @@
 package dang.gun.com.post;
 
-import dang.gun.com.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +14,17 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public int save(Post post){
-        System.out.println("post"+post.getContent());
+    public int save(Post post) {
+        System.out.println("post" + post.getContent());
         postRepository.save(post);
         return post.getId();
     }
 
-    public Optional<Post> findOne(int id){
+    public Optional<Post> findOne(int id) {
         return postRepository.findById(id);
     }
 
-    public List<Post> findPostList(){
+    public List<Post> findPostList() {
         return postRepository.findAll();
     }
 
