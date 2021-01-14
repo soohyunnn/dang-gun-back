@@ -1,11 +1,8 @@
 package dang.gun.com.user;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -21,38 +18,40 @@ public class UserController {
 
     /**
      * 회원가입
+     *
      * @param userSingupDto
      * @return
      */
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity singup(@RequestBody UserSingupDto userSingupDto) {
-            userService.singup(userSingupDto);
+    public ResponseEntity signup(@RequestBody UserSingupDto userSingupDto) {
+        userService.signup(userSingupDto);
         return ResponseEntity.ok("SUCCESS");
     }
 
     /**
      * 중복회원조회
+     *
      * @param email
      * @return
      */
     @ResponseBody
-    @GetMapping()
-     public ResponseEntity<List> findByEmail(@RequestParam(value="email") String email) {
-        List<User> user = userService.findByEmail(email);
-        return ResponseEntity.ok(user);
-     }
+    @GetMapping
+    public ResponseEntity<Boolean> isExistingUserByEmail(@RequestParam(value = "email") String email) {
+        return ResponseEntity.ok(userService.isExistingUserByEmail(email));
+    }
 
     /**
      * 로그인
+     *
      * @param userSingupDto
      * @return
      */
-     @PostMapping("/singin")
-     @ResponseBody
-     public ResponseEntity singin(@RequestBody UserSingupDto userSingupDto) {
-             //userService.singup(userSingupDto);
-         return ResponseEntity.ok("SUCCESS");
-     }
+    @PostMapping("/signin")
+    @ResponseBody
+    public ResponseEntity signin(@RequestBody UserSingupDto userSingupDto) {
+        userService.signin(userSingupDto);
+        return ResponseEntity.ok("SUCCESS");
+    }
 
 }

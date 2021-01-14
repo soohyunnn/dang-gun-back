@@ -1,6 +1,9 @@
 package dang.gun.com.user;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data//게터 세터 자동으로 만들어준다.
@@ -11,6 +14,6 @@ public class UserSingupDto {
     String email;
     String username;
     String password;
-    String addressnumber;
-    String detailaddress;
+    String addressNumber;
+    String detailAddress;
 }

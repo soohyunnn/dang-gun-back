@@ -5,7 +5,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,7 +18,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public int singup(UserSingupDto userSingupDto){
+    public int signup(UserSingupDto userSingupDto) {
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
 
@@ -29,8 +28,8 @@ public class UserService {
         user.setUsername(userSingupDto.username);
         user.setPrevPassword(passwordEncoding);
         user.setPassword(passwordEncoding);
-        user.setAddressNumber(userSingupDto.addressnumber);
-        user.setDetailAddress(userSingupDto.detailaddress);
+        user.setAddressNumber(userSingupDto.addressNumber);
+        user.setDetailAddress(userSingupDto.detailAddress);
         user.setCreatedAt(now);
         user.setModifiedAt(now);
         user.setRemovedAt(now);
@@ -41,17 +40,17 @@ public class UserService {
         return user.getId();
     }
 
-    public List<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
+    public Boolean isExistingUserByEmail(String email) {
+
+        return userRepository.existsByEmail(email);
     }
 
-    public User singin(UserSingupDto userSingupDto) {
+    public User signin(UserSingupDto userSingupDto) {
         User user = (User) userRepository.findByEmail(userSingupDto.email);
-        if(user != null){
-            passwordEncoder.matches(userSingupDto.password, user.getPassword());
-            return user;
-        }
-        return null;
+        if (user == null) throw new IllegalArgumentException();
+        passwordEncoder.matches(userSingupDto.password, user.getPassword());
+        return user;
+
     }
 
 }
