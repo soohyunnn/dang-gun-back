@@ -51,5 +51,9 @@ public class User {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> posts = new ArrayList<Post>();
+    public List<Post> posts = new ArrayList<Post>();
+
+    public String getUsername() {
+        return username;
+    }
 }
