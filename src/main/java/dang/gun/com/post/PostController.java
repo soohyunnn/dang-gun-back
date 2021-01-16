@@ -1,10 +1,12 @@
 package dang.gun.com.post;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController()
 @RequestMapping("/boards")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -12,9 +14,6 @@ public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     /**
      * 게시글 등록

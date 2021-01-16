@@ -17,11 +17,17 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String imgname;
-    String imgpath;
-    String imgtype;
-    LocalDateTime created_at;
+    @Column(name = "imgname")
+    String imgName;
+    @Column(name = "imgpath")
+    String imgPath;
+    @Column(name = "imgtype")
+    String imgType;
+    @Column(name = "created_at")
+    LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "modifiedAt")
     LocalDateTime modified_at;
+    @Column(name = "removedAt")
     LocalDateTime removed_at;
 
     @JsonIgnore
@@ -29,4 +35,7 @@ public class Image {
     @JoinColumn(name = "post_id")
     Post post;
 
+    public Post getPost() {
+        return post;
+    }
 }
