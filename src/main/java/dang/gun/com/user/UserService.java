@@ -18,7 +18,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public int signup(UserSingupDto userSingupDto) {
+    public int signup(UserDto userSingupDto) {
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
 
@@ -45,7 +45,7 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public User signin(UserSingupDto userSingupDto) {
+    public User signin(UserDto userSingupDto) {
         User user = (User) userRepository.findByEmail(userSingupDto.email);
         if (user == null) throw new IllegalArgumentException();
         passwordEncoder.matches(userSingupDto.password, user.getPassword());

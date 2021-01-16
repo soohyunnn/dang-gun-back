@@ -32,16 +32,24 @@ public class Post {
     String title;
     String content;
     int price;
-    int view_cnt;
-    int like_cnt;
-    LocalDateTime created_at;
-    LocalDateTime modified_at;
-    LocalDateTime removed_at;
+    @Column(name = "view_cnt")
+    int viewCnt = 0;
+    @Column(name = "like_cnt")
+    int likeCnt = 0;
+    @Column(name = "created_at")
+    LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "modified_at")
+    LocalDateTime modifiedAt;
+    @Column(name = "removed_at")
+    LocalDateTime removedAt;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
 
+    public User getUser() {
+        return user;
+    }
 
 }
