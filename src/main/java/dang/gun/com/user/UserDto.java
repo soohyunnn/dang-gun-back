@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor//기본 생성자
 @AllArgsConstructor//모든 매개변수를 가지고 있는 생성자
 @Builder//생성자 쉽게 만들어주는 기능
-public class UserSingupDto {
+public class UserDto {
     String email;
     String username;
     String password;

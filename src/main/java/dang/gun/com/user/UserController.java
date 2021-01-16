@@ -19,13 +19,13 @@ public class UserController {
     /**
      * 회원가입
      *
-     * @param userSingupDto
+     * @param userDto
      * @return
      */
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity signup(@RequestBody UserSingupDto userSingupDto) {
-        userService.signup(userSingupDto);
+    public ResponseEntity signup(@RequestBody UserDto userDto) {
+        userService.signup(userDto);
         return ResponseEntity.ok("SUCCESS");
     }
 
@@ -44,13 +44,13 @@ public class UserController {
     /**
      * 로그인
      *
-     * @param userSingupDto
+     * @param userDto
      * @return
      */
     @PostMapping("/signin")
     @ResponseBody
-    public ResponseEntity signin(@RequestBody UserSingupDto userSingupDto) {
-        userService.signin(userSingupDto);
+    public ResponseEntity signin(@RequestBody UserDto userDto) {
+        userService.signin(userDto);
         return ResponseEntity.ok("SUCCESS");
     }
 
