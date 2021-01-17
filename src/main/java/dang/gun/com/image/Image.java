@@ -18,11 +18,11 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(name = "imgname")
-    String name;
+    String imgName;
     @Column(name = "imgpath")
-    String path;
+    String imgPath;
     @Column(name = "imgtype")
-    String type;
+    String imgType;
     @Column(name = "created_at")
     LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "modifiedAt")
