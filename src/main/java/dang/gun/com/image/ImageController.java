@@ -6,34 +6,48 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/image")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImageController {
 
     private final ImageService imageService;
     private final S3Uploader s3Uploader;
 
 
-    @PostMapping(value = "/upload", produces = "application/json")
-    public String upload(@RequestParam("data") MultipartFile file, @RequestParam("id") int id) throws IOException {
-        String imgPath = s3Uploader.upload(file);
+    @PostMapping(value = "/upload")
+    public List<String> upload(@RequestParam("file") List<MultipartFile> file, @RequestParam("id") int id) throws IOException {
+        String imgPath;
+        List<String> resultPath = new ArrayList<String>();
 
-        System.out.println("file = " + file);
-        System.out.println(file.getName());
-        System.out.println(file.getContentType());
+        for (int i = 0; i < file.size(); i++) {
+            System.out.println("file" + i + " : " + file.get(i));
+            imgPath = s3Uploader.upload(file.get(i));
+            resultPath.add(imgPath);
 
-        Post post = new Post();
-        post.setId(id);
+            System.out.println("i: " + i + "file = " + file);
+            System.out.println(file.get(i).getName());
+            System.out.println(file.get(i).getContentType());
 
-        Image image = new Image();
-        image.setImgName(file.getOriginalFilename());
-        image.setImgPath(imgPath);
-        image.setImgType(file.getContentType());
-        image.setPost(post);
-        imageService.saveImage(image);
+            Post post = new Post();
+            post.setId(id);
 
-        return imgPath;
+            Image image = new Image();
+            image.setImgName(file.get(i).getOriginalFilename());
+            image.setImgPath(imgPath);
+            image.setImgType(file.get(i).getContentType());
+            image.setPost(post);
+            imageService.saveImage(image);
+
+        }
+
+
+        return resultPath;
     }
+
+
 }
