@@ -25,7 +25,7 @@ public class UserService {
         String passwordEncoding = passwordEncoder.encode(userSingupDto.password);
 
         user.setEmail(userSingupDto.email);
-        user.setUsername(userSingupDto.username);
+        user.setName(userSingupDto.username);
         user.setPrevPassword(passwordEncoding);
         user.setPassword(passwordEncoding);
         user.setAddressNumber(userSingupDto.addressNumber);

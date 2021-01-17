@@ -1,15 +1,14 @@
 package dang.gun.com.post
 
 import dang.gun.com.user.User
-import lombok.NoArgsConstructor
 import java.time.LocalDateTime
 
-data class PostRequest(
+data class PostWHATRequest(
         var id : Int,
         var title: String,
         var content: String,
         var price: Int,
-        var userId: User
+        var user: User
 )
 
 
@@ -28,7 +27,7 @@ data class PostDto(
             title = post.title,
             content = post.content,
             price = post.price,
-            userName = post.getUser().username,
+            userName = post.getUser().name,
             createAt = post.createdAt,
             modifiedAt = post.modifiedAt
     )

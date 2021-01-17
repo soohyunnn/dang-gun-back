@@ -17,19 +17,19 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post create(PostRequest postRequestDto) {
+    public Post create(PostWHATRequest postRequestDto) {
         Post post = new Post();
 
         post.setTitle(postRequestDto.getTitle());
         post.setContent(postRequestDto.getContent());
         post.setPrice(postRequestDto.getPrice());
-        post.setUser(postRequestDto.getUserId());
+        post.setUser(postRequestDto.getUser());
 
         Post postResponse = postRepository.save(post);
         return postResponse;
     }
 
-    public Post update(PostRequest postRequest) {
+    public Post update(PostWHATRequest postRequest) {
 
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
@@ -48,7 +48,7 @@ public class PostService {
         return postResponse;
     }
 
-    public Boolean delete(PostRequest postRequest) {
+    public void delete(PostWHATRequest postRequest) throws Exception {
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
         if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
@@ -60,10 +60,8 @@ public class PostService {
 
         Post postResponse = postRepository.findOneById(resultPost.get().id);
         if (postResponse.getRemovedAt().equals("")) {
-            log.info("삭제 실패");
-            return false;
+            throw new Exception();
         }
-        return true;
     }
 
 

@@ -19,7 +19,7 @@ public class ImageController {
     @PostMapping(value = "/upload")
     public ResponseEntity upload(@RequestParam("file") List<MultipartFile> file, @RequestParam("id") int postId) throws IOException {
 
-        imageService.saveImage(file, postId);
+        imageService.save(file, postId);
 
         return ResponseEntity.ok("SUCCESS");
     }

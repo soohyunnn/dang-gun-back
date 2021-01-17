@@ -33,8 +33,8 @@ public class User {
     int id;
     @Column(unique = true)
     String email;
-    @Column(unique = true)
-    String username;
+    @Column(name="username", unique = true)
+    String name;
     String password;
     @Column(name = "prev_password")
     String prevPassword;
@@ -53,7 +53,7 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     public List<Post> posts = new ArrayList<Post>();
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 }

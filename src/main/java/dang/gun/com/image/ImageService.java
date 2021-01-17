@@ -17,7 +17,7 @@ public class ImageService {
     private final S3Uploader s3Uploader;
 
 
-    public void saveImage(List<MultipartFile> file, int postId) throws IOException {
+    public void save(List<MultipartFile> file, int postId) throws IOException {
 
         for (int i = 0; i < file.size(); i++) {
             Image image = new Image();

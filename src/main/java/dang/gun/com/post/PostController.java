@@ -23,7 +23,7 @@ public class PostController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<PostDto> create(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<PostDto> create(@RequestBody PostWHATRequest postRequest) {
         Post post = postService.create(postRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
@@ -36,7 +36,7 @@ public class PostController {
      */
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<PostDto> update(@RequestBody PostWHATRequest postRequest) {
         Post post = postService.update(postRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
@@ -49,9 +49,9 @@ public class PostController {
      */
     @PostMapping("/delete")
     @ResponseBody
-    public ResponseEntity<Boolean> delete(@RequestBody PostRequest postRequest) {
-        Boolean deleteSuccessWhether = postService.delete(postRequest);
-        return ResponseEntity.ok(deleteSuccessWhether);
+    public ResponseEntity delete(@RequestBody PostWHATRequest postRequest) throws Exception {
+        postService.delete(postRequest);
+        return ResponseEntity.ok("SUCCESS");
     }
 
     /**
