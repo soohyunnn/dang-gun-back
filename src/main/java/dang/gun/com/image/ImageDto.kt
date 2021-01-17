@@ -6,7 +6,7 @@ data class ImageRequest(
         var imgName: String,
         var imgPath: String,
         var imgType: String,
-        var postId : Post
+        var post : Post
 ) {
 
 

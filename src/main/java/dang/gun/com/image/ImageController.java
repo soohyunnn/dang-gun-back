@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/images ")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImageController {
 
@@ -20,7 +20,7 @@ public class ImageController {
 
 
     @PostMapping(value = "/upload")
-    public List<String> upload(@RequestParam("file") List<MultipartFile> file, @RequestParam("id") int id) throws IOException {
+    public List<String> upload(@RequestParam("file") List<MultipartFile> file, @RequestParam("id") int postId) throws IOException {
         String imgPath;
         List<String> resultPath = new ArrayList<String>();
 
@@ -34,12 +34,12 @@ public class ImageController {
             System.out.println(file.get(i).getContentType());
 
             Post post = new Post();
-            post.setId(id);
+            post.setId(postId);
 
             Image image = new Image();
-            image.setImgName(file.get(i).getOriginalFilename());
-            image.setImgPath(imgPath);
-            image.setImgType(file.get(i).getContentType());
+            image.setName(file.get(i).getOriginalFilename());
+            image.setPath(imgPath);
+            image.setType(file.get(i).getContentType());
             image.setPost(post);
             imageService.saveImage(image);
 

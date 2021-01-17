@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController()
+@RestController
 @RequestMapping("/boards")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
