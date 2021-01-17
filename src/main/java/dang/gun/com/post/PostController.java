@@ -49,7 +49,7 @@ public class PostController {
      */
     @PostMapping("/delete")
     @ResponseBody
-    public ResponseEntity delete(@RequestBody PostWHATRequest postRequest) throws Exception {
+    public ResponseEntity delete(@RequestBody PostWHATRequest postRequest){
         postService.delete(postRequest);
         return ResponseEntity.ok("SUCCESS");
     }

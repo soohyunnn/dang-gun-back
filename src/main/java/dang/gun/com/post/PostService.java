@@ -48,7 +48,7 @@ public class PostService {
         return postResponse;
     }
 
-    public void delete(PostWHATRequest postRequest) throws Exception {
+    public void delete(PostWHATRequest postRequest){
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
         if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
@@ -57,11 +57,6 @@ public class PostService {
             selectPost.setRemovedAt(LocalDateTime.now());
             Post post = postRepository.save(selectPost);
         });
-
-        Post postResponse = postRepository.findOneById(resultPost.get().id);
-        if (postResponse.getRemovedAt().equals("")) {
-            throw new Exception();
-        }
     }
 
 
