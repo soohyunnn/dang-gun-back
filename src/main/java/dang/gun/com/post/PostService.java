@@ -33,6 +33,8 @@ public class PostService {
 
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
+        if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
+
         resultPost.ifPresent(selectPost -> {
             selectPost.setTitle(postRequest.getTitle());
             selectPost.setContent(postRequest.getContent());
@@ -48,6 +50,8 @@ public class PostService {
 
     public Boolean delete(PostRequest postRequest) {
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
+
+        if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
 
         resultPost.ifPresent(selectPost -> {
             selectPost.setRemovedAt(LocalDateTime.now());
