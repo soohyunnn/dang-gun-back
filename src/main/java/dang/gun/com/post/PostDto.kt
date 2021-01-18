@@ -9,7 +9,9 @@ data class PostWHATRequest(
         var content: String,
         var price: Int,
         var user: User
-)
+) {
+
+}
 
 
 
@@ -20,7 +22,7 @@ data class PostDto(
         var price: Int?,
         var userName: String?,
         var createAt: LocalDateTime?,
-        var modifiedAt : LocalDateTime?,
+        var modifiedAt: LocalDateTime?,
 ) {
     constructor(post: Post) : this(
             id = post.id,
@@ -31,5 +33,4 @@ data class PostDto(
             createAt = post.createdAt,
             modifiedAt = post.modifiedAt
     )
-
 }

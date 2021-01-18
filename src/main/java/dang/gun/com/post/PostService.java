@@ -1,31 +1,55 @@
 package dang.gun.com.post;
 
+import dang.gun.com.image.ImageService;
+import dang.gun.com.user.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ImageService imageService;
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
 
-    public Post create(PostWHATRequest postRequestDto) {
+    public Post create(List<MultipartFile> file, HttpServletRequest requset) throws IOException {
         Post post = new Post();
+        User user = new User();
 
-        post.setTitle(postRequestDto.getTitle());
-        post.setContent(postRequestDto.getContent());
-        post.setPrice(postRequestDto.getPrice());
-        post.setUser(postRequestDto.getUser());
 
+        String title = requset.getParameter("title");
+        String content = requset.getParameter("content");
+        String price = requset.getParameter("price");
+        String userID = requset.getParameter("userID");
+        String userName = requset.getParameter("userName");
+
+        user.setId(Integer.parseInt(userID));
+        user.setName(userName);
+
+        PostWHATRequest postRequest = new PostWHATRequest(0,title, content, Integer.parseInt(price), user);
+
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        post.setPrice(postRequest.getPrice());
+        post.setUser(postRequest.getUser());
+
+        //게시글 저장
         Post postResponse = postRepository.save(post);
+
+        int postId = postResponse.getId();
+        //이미지 저장 시작
+        imageService.save(file, postId);
+
         return postResponse;
     }
 
