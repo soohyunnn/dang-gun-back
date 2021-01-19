@@ -1,0 +1,1 @@
+ALTER TABLE image ADD order_number INT(10) NOT NULL;

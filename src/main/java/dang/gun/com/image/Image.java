@@ -29,6 +29,8 @@ public class Image {
     LocalDateTime modified_at;
     @Column(name = "removedAt")
     LocalDateTime removed_at;
+    @Column(name = "order_number")
+    int orderNumber;
 
     @JsonIgnore
     @ManyToOne

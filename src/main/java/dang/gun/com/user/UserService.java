@@ -41,7 +41,6 @@ public class UserService {
     }
 
     public Boolean isExistingUserByEmail(String email) {
-
         return userRepository.existsByEmail(email);
     }
 
