@@ -18,23 +18,27 @@ public class ImageService {
 
 
     public void save(List<MultipartFile> file, int postId) throws IOException {
-        int cnt = 1;
-        for (int i = 0; i < file.size(); i++) {
-            Image image = new Image();
-            String imgPath = s3Uploader.upload(file.get(i));
+//        int cnt = 1;
+//        for (int i = 0; i < file.size(); i++) {
+//            Image image = new Image();
+//            String imgPath = s3Uploader.upload(file.get(i));
+//
+//            Post post = new Post();
+//            post.setId(postId);
+//
+//            image.setName(file.get(i).getOriginalFilename());
+//            image.setPath(imgPath);
+//            image.setType(file.get(i).getContentType());
+//            image.setOrderNumber(cnt++);
+//            image.setPost(post);
+//            imageRepository.save(image);
+//        }
 
-            Post post = new Post();
-            post.setId(postId);
+        List<Image> imageList = imageRepository.findImageQueryNative(1);
 
-            image.setName(file.get(i).getOriginalFilename());
-            image.setPath(imgPath);
-            image.setType(file.get(i).getContentType());
-            image.setOrderNumber(cnt++);
-            image.setPost(post);
-            imageRepository.save(image);
+        for(int i = 0 ; i < imageList.size(); i++){
+            System.out.println("imageList = " + imageList.get(i).getName()+ imageList.get(i).getPost().getId());
         }
 
-//        List<Image> imageList = imageRepository.findByOrderNumber();
-//        System.out.println("imageList = " + imageList);
     }
 }
