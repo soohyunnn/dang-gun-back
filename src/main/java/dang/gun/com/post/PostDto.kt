@@ -3,7 +3,7 @@ package dang.gun.com.post
 import dang.gun.com.user.User
 import java.time.LocalDateTime
 
-data class PostWHATRequest(
+data class PostCreateRequest(
         var id : Int,
         var title: String,
         var content: String,
@@ -12,8 +12,6 @@ data class PostWHATRequest(
 ) {
 
 }
-
-
 
 data class PostDto(
         var id: Int,

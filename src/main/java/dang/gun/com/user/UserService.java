@@ -18,18 +18,18 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public int signup(UserDto userSingupDto) {
+    public int signup(UserSignupDto userSignupDto) {
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
 
-        String passwordEncoding = passwordEncoder.encode(userSingupDto.password);
+        String passwordEncoding = passwordEncoder.encode(userSignupDto.password);
 
-        user.setEmail(userSingupDto.email);
-        user.setName(userSingupDto.username);
+        user.setEmail(userSignupDto.email);
+        user.setName(userSignupDto.username);
         user.setPrevPassword(passwordEncoding);
         user.setPassword(passwordEncoding);
-        user.setAddressNumber(userSingupDto.addressNumber);
-        user.setDetailAddress(userSingupDto.detailAddress);
+        user.setAddressNumber(userSignupDto.addressNumber);
+        user.setDetailAddress(userSignupDto.detailAddress);
         user.setCreatedAt(now);
         user.setModifiedAt(now);
         user.setRemovedAt(now);
@@ -44,7 +44,7 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public User signin(UserDto userSingupDto) {
+    public User signin(UserSignupDto userSingupDto) {
         User user = (User) userRepository.findByEmail(userSingupDto.email);
         if (user == null) throw new IllegalArgumentException();
         passwordEncoder.matches(userSingupDto.password, user.getPassword());

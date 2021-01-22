@@ -22,7 +22,7 @@ public class UserController {
      */
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity signup(@RequestBody UserDto userDto) {
+    public ResponseEntity signup(@RequestBody UserSignupDto userDto) {
         userService.signup(userDto);
         return ResponseEntity.ok("SUCCESS");
     }
@@ -47,7 +47,7 @@ public class UserController {
      */
     @PostMapping("/signin")
     @ResponseBody
-    public ResponseEntity signin(@RequestBody UserDto userDto) {
+    public ResponseEntity signin(@RequestBody UserSignupDto userDto) {
         userService.signin(userDto);
         return ResponseEntity.ok("SUCCESS");
     }

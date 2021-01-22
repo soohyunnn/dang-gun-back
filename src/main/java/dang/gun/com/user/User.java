@@ -33,7 +33,7 @@ public class User {
     int id;
     @Column(unique = true)
     String email;
-    @Column(name="username", unique = true)
+    @Column(unique = true)
     String name;
     String password;
     @Column(name = "prev_password")

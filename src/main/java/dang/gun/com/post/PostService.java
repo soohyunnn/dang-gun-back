@@ -36,7 +36,7 @@ public class PostService {
         user.setId(Integer.parseInt(userID));
         user.setName(userName);
 
-        PostWHATRequest postRequest = new PostWHATRequest(0,title, content, Integer.parseInt(price), user);
+        PostCreateRequest postRequest = new PostCreateRequest(0,title, content, Integer.parseInt(price), user);
 
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
@@ -53,7 +53,7 @@ public class PostService {
         return postResponse;
     }
 
-    public Post update(PostWHATRequest postRequest) {
+    public Post update(PostCreateRequest postRequest) {
 
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
@@ -72,7 +72,7 @@ public class PostService {
         return postResponse;
     }
 
-    public void delete(PostWHATRequest postRequest){
+    public void delete(PostCreateRequest postRequest){
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
         if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
@@ -88,8 +88,10 @@ public class PostService {
         return postRepository.findOneById(id);
     }
 
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    public List<PostAllDto> findAll() {
+        List<PostAllDto> postList = postRepository.findPostBySequenceLimit8Inner(1);
+        if(postList == null) throw new IllegalArgumentException();
+        return postList;
     }
 
 }

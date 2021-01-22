@@ -1,7 +1,5 @@
 package dang.gun.com.post;
 
-import dang.gun.com.image.ImageService;
-import dang.gun.com.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/boards")
+@RequestMapping("/posts")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
 
@@ -26,12 +24,7 @@ public class PostController {
      * @param //postRequest
      * @return
      */
-//    @PostMapping
-//    @ResponseBody
-//    public ResponseEntity<PostDto> create(@RequestBody PostWHATRequest postRequest) {
-//        Post post = postService.create(postRequest);
-//        return ResponseEntity.ok(new PostDto(post));
-//    }
+
 
     @PostMapping
     @ResponseBody
@@ -47,9 +40,9 @@ public class PostController {
      * @param postRequest
      * @return
      */
-    @PostMapping("/update")
+    @PutMapping
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostWHATRequest postRequest) {
+    public ResponseEntity<PostDto> update(@RequestBody PostCreateRequest postRequest) {
         Post post = postService.update(postRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
@@ -60,9 +53,9 @@ public class PostController {
      * @param postRequest
      * @return
      */
-    @PostMapping("/delete")
+    @DeleteMapping
     @ResponseBody
-    public ResponseEntity delete(@RequestBody PostWHATRequest postRequest) {
+    public ResponseEntity delete(@RequestBody PostCreateRequest postRequest) {
         postService.delete(postRequest);
         return ResponseEntity.ok("SUCCESS");
     }
@@ -73,20 +66,20 @@ public class PostController {
      * @param id
      * @return
      */
-    @GetMapping("/post")
-    public ResponseEntity<PostDto> findOne(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> findOne(@PathVariable(name="id") int id) {
         Post post = postService.findOne(id);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
-     * 게시글 전체 조회s
+     * 게시글 전체 조회
      *
      * @return
      */
     @GetMapping
     public ResponseEntity<List> findAll() {
-        List<Post> postList = postService.findAll();
+        List<PostAllDto> postList = postService.findAll();
         return ResponseEntity.ok(postList);
     }
 }
