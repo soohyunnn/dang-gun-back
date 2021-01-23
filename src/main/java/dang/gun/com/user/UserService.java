@@ -1,5 +1,6 @@
 package dang.gun.com.user;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,16 +9,17 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
+    /**
+     * 회원가입
+     * @param userSignupDto
+     * @return
+     */
     public int signup(UserSignupDto userSignupDto) {
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
@@ -40,10 +42,20 @@ public class UserService {
         return user.getId();
     }
 
+    /**
+     * 중복회원조회
+     * @param email
+     * @return
+     */
     public Boolean isExistingUserByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
 
+    /**
+     * 로그인
+     * @param userSingupDto
+     * @return
+     */
     public User signin(UserSignupDto userSingupDto) {
         User user = (User) userRepository.findByEmail(userSingupDto.email);
         if (user == null) throw new IllegalArgumentException();

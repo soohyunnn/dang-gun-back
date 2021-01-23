@@ -22,21 +22,19 @@ public class PostService {
     private final ImageService imageService;
 
 
-    public Post create(List<MultipartFile> file, HttpServletRequest requset) throws IOException {
+    /**
+     * 게시글 저장
+     * @param file
+     * @param postRequest
+     * @return
+     * @throws IOException
+     */
+    public Post create(List<MultipartFile> file, PostCreateRequest postRequest) throws IOException {
         Post post = new Post();
         User user = new User();
 
-
-        String title = requset.getParameter("title");
-        String content = requset.getParameter("content");
-        String price = requset.getParameter("price");
-        String userID = requset.getParameter("userID");
-        String userName = requset.getParameter("userName");
-
-        user.setId(Integer.parseInt(userID));
-        user.setName(userName);
-
-        PostCreateRequest postRequest = new PostCreateRequest(0,title, content, Integer.parseInt(price), user);
+        user.setId(postRequest.getUser().getId());
+        user.setName(postRequest.getUser().getName());
 
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
@@ -53,6 +51,11 @@ public class PostService {
         return postResponse;
     }
 
+    /**
+     * 게시글 수정
+     * @param postRequest
+     * @return
+     */
     public Post update(PostCreateRequest postRequest) {
 
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
@@ -72,6 +75,10 @@ public class PostService {
         return postResponse;
     }
 
+    /**
+     * 게시글 삭제
+     * @param postRequest
+     */
     public void delete(PostCreateRequest postRequest){
         Optional<Post> resultPost = postRepository.findById(postRequest.getId());
 
@@ -83,11 +90,19 @@ public class PostService {
         });
     }
 
-
+    /**
+     * 상세 게시글 조회
+     * @param id
+     * @return
+     */
     public Post findOne(int id) {
         return postRepository.findOneById(id);
     }
 
+    /**
+     * 게시글 전체 조회
+     * @return
+     */
     public List<PostAllDto> findAll() {
         List<PostAllDto> postList = postRepository.findPostBySequenceLimit8Inner(1);
         if(postList == null) throw new IllegalArgumentException();

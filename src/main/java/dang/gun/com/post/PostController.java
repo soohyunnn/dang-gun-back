@@ -24,15 +24,12 @@ public class PostController {
      * @param //postRequest
      * @return
      */
-
-
     @PostMapping
     @ResponseBody
-    public ResponseEntity create1(@RequestPart("file") List<MultipartFile> file, HttpServletRequest requset) throws IOException {
-        Post post = postService.create(file, requset);
+    public ResponseEntity create1(@RequestPart("file") List<MultipartFile> file, @RequestPart("post") PostCreateRequest postRequest) throws IOException {
+        Post post = postService.create(file, postRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
-
 
     /**
      * 게시글 수정
@@ -67,7 +64,7 @@ public class PostController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> findOne(@PathVariable(name="id") int id) {
+    public ResponseEntity<PostDto> findOne(@PathVariable(name = "id") int id) {
         Post post = postService.findOne(id);
         return ResponseEntity.ok(new PostDto(post));
     }

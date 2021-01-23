@@ -18,7 +18,10 @@ data class PostDto(
         var title: String?,
         var content: String?,
         var price: Int?,
+        var viewCnt : Int?,
+        var likeCnt : Int?,
         var userName: String?,
+        var detailaddress: String?,
         var createAt: LocalDateTime?,
         var modifiedAt: LocalDateTime?,
 ) {
@@ -27,8 +30,20 @@ data class PostDto(
             title = post.title,
             content = post.content,
             price = post.price,
+            viewCnt = post.viewCnt,
+            likeCnt = post.likeCnt,
             userName = post.getUser().name,
+            detailaddress = post.getUser().detailAddress,
             createAt = post.createdAt,
             modifiedAt = post.modifiedAt
     )
+}
+
+interface PostAllDto {
+    fun getId() : Int;
+    fun getTitle() : String;
+    fun getPrice() :Int;
+    fun getDetailaddress() : String;
+    fun getPath() : String;
+    fun getFilename() : String;
 }

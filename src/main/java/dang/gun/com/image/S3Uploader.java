@@ -51,8 +51,9 @@ public class S3Uploader {
         String fileName = file.getOriginalFilename();
         LocalDateTime now = new LocalDateTime();
 
-        s3Client.putObject(new PutObjectRequest(bucket, fileName+now, file.getInputStream(), null)
+        s3Client.putObject(new PutObjectRequest(bucket, fileName + "_" + now, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(bucket, fileName).toString();
+
+        return s3Client.getUrl(bucket, fileName + "_" + now).toString();
     }
 }

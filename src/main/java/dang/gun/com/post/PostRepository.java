@@ -12,7 +12,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findOneById(int id);
 
-    @Query(value = "select p.title, p.price, u.detailaddress, i.path, i.filename" +
+    @Query(value = "select p.id, p.title, p.price, u.detailaddress, i.path, i.filename" +
             " from image i" +
             " inner join post p on i.post_id = p.id" +
             " inner join user u on u.id = p.user_id" +
