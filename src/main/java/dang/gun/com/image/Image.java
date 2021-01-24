@@ -48,7 +48,4 @@ public class Image {
     @JoinColumn(name="post_Id", referencedColumnName="id", insertable=false, updatable=false)
     Post post;
 
-    public Post getPost() {
-        return post;
-    }
 }
