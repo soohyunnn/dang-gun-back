@@ -26,7 +26,6 @@ public class ImageService {
      * @throws IOException
      */
     public void save(List<MultipartFile> fileList, int postId) throws IOException {
-        int cnt = 1;
         for (int i = 0; i < fileList.size(); i++) {
             Image image = new Image();
             String imgPath = s3Uploader.upload(fileList.get(i));
@@ -37,7 +36,7 @@ public class ImageService {
             image.setFilename(fileList.get(i).getOriginalFilename());
             image.setPath(imgPath);
             image.setType(fileList.get(i).getContentType());
-            image.setSequence(cnt++);
+            image.setSequence(i+1);
             image.setPost(post);
             imageRepository.save(image);
         }

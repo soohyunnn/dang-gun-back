@@ -24,7 +24,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity signup(@RequestBody UserSignupDto userSignupDto) {
         userService.signup(userSignupDto);
-        return ResponseEntity.ok("SUCCESS");
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -38,18 +38,4 @@ public class UserController {
     public ResponseEntity<Boolean> isExistingUserByEmail(@RequestParam(value = "email") String email) {
         return ResponseEntity.ok(userService.isExistingUserByEmail(email));
     }
-
-    /**
-     * 로그인
-     *
-     * @param userDto
-     * @return
-     */
-    @PostMapping("/signin")
-    @ResponseBody
-    public ResponseEntity signin(@RequestBody UserSignupDto userDto) {
-        userService.signin(userDto);
-        return ResponseEntity.ok("SUCCESS");
-    }
-
 }

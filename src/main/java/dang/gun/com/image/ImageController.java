@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,15 +23,10 @@ public class ImageController {
      * @param postId
      * @return
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<List> findAllByPostId(@PathVariable(name = "id") int postId) {
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<ImageDto>> findAllByPostId(@PathVariable(name = "postId") int postId) {
         List<Image> imageList = imageService.findAllByPostId(postId);
-        List<ImageDto> responseImageList = new ArrayDeque<>();
-
-        for (Image image : imageList) {
-            ImageDto imageDto = new ImageDto(image);
-            responseImageList.add(imageDto);
-        }
+        List<ImageDto> responseImageList = imageList.stream().map(ImageDto::new).collect(Collectors.toList());
 
         return ResponseEntity.ok(responseImageList);
     }

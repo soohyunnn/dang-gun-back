@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    Post findOneById(int id);
 
     @Query(value = "select p.id, p.title, p.price, u.detailaddress, i.path, i.filename" +
             " from image i" +

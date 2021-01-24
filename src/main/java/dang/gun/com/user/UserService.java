@@ -49,17 +49,5 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    /**
-     * 로그인
-     * @param userSingupDto
-     * @return
-     */
-    public User signin(UserSignupDto userSingupDto) {
-        User user = (User) userRepository.findByEmail(userSingupDto.getEmail());
-        if (user == null) throw new IllegalArgumentException();
-        passwordEncoder.matches(userSingupDto.getPassword(), user.getPassword());
-        return user;
-
-    }
 
 }

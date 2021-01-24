@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -56,20 +57,15 @@ public class PostService {
      * @return
      */
     public Post update(PostInputRequest postInputRequest) {
+        Post postResponse = postRepository.findById(postInputRequest.getId()).orElse(null);
 
-        Optional<Post> resultPost = postRepository.findById(postInputRequest.getId());
+        if(Objects.isNull(postResponse)) throw  new IllegalArgumentException();
 
-        if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
-
-        resultPost.ifPresent(selectPost -> {
-            selectPost.setTitle(postInputRequest.getTitle());
-            selectPost.setContent(postInputRequest.getContent());
-            selectPost.setPrice(postInputRequest.getPrice());
-            selectPost.setModifiedAt(LocalDateTime.now());
-            Post post = postRepository.save(selectPost);
-        });
-
-        Post postResponse = postRepository.findOneById(resultPost.get().id);
+        postResponse.setTitle(postInputRequest.getTitle());
+        postResponse.setContent(postInputRequest.getContent());
+        postResponse.setPrice(postInputRequest.getPrice());
+        postResponse.setModifiedAt(LocalDateTime.now());
+        postRepository.save(postResponse);
 
         return postResponse;
     }
@@ -79,23 +75,22 @@ public class PostService {
      * @param postInputRequest
      */
     public void delete(PostInputRequest postInputRequest){
-        Optional<Post> resultPost = postRepository.findById(postInputRequest.getId());
+        Post post = postRepository.findById(postInputRequest.getId()).orElse(null);
 
-        if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
+        if(Objects.isNull(post)) throw new IllegalArgumentException();
 
-        resultPost.ifPresent(selectPost -> {
-            selectPost.setRemovedAt(LocalDateTime.now());
-            Post post = postRepository.save(selectPost);
-        });
+        post.setRemovedAt(LocalDateTime.now());
+        postRepository.save(post);
+
     }
 
     /**
      * 상세 게시글 조회
-     * @param id
+     * @param postId
      * @return
      */
-    public Post findOne(int id) {
-        return postRepository.findOneById(id);
+    public Post findOne(int postId) {
+        return postRepository.findById(postId).orElse(null);
     }
 
     /**
@@ -104,7 +99,7 @@ public class PostService {
      */
     public List<PostListDto> findAll() {
         List<PostListDto> postList = postRepository.findPostBySequenceLimit8(1);
-        if(postList == null) throw new IllegalArgumentException();
+        if(postList.isEmpty()) throw new IllegalArgumentException();
         return postList;
     }
 

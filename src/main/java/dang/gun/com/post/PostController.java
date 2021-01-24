@@ -53,18 +53,18 @@ public class PostController {
     @ResponseBody
     public ResponseEntity delete(@RequestBody PostInputRequest postInputRequest) {
         postService.delete(postInputRequest);
-        return ResponseEntity.ok("SUCCESS");
+        return ResponseEntity.ok().build();
     }
 
     /**
      * 게시글 상세 조회
      *
-     * @param id
+     * @param postId
      * @return
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<PostDto> findOne(@PathVariable(name = "id") int id) {
-        Post post = postService.findOne(id);
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDto> findOne(@PathVariable(name = "postId") int postId) {
+        Post post = postService.findOne(postId);
         return ResponseEntity.ok(new PostDto(post));
     }
 
