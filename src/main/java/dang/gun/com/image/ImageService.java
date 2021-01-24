@@ -1,6 +1,7 @@
 package dang.gun.com.image;
 
 import dang.gun.com.post.Post;
+import dang.gun.com.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ import java.util.List;
 public class ImageService {
 
     private final ImageRepository imageRepository;
+    private final PostRepository postRepository;
     private final S3Uploader s3Uploader;
 
     /**
@@ -30,14 +33,11 @@ public class ImageService {
             Image image = new Image();
             String imgPath = s3Uploader.upload(fileList.get(i));
 
-            Post post = new Post();
-            post.setId(postId);
-
             image.setFilename(fileList.get(i).getOriginalFilename());
             image.setPath(imgPath);
             image.setType(fileList.get(i).getContentType());
             image.setSequence(i+1);
-            image.setPost(post);
+            image.setPostId(postId);
             imageRepository.save(image);
         }
     }

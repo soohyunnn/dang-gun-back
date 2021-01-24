@@ -20,39 +20,39 @@ public class PostController {
     /**
      * 게시글 등록
      *
-     * @param postInputRequest
+     * @param postCreateRequest
      * @return
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity create(@RequestPart("file") List<MultipartFile> fileList, @RequestPart("post") PostInputRequest postInputRequest) throws IOException {
-        Post post = postService.create(fileList, postInputRequest);
+    public ResponseEntity create(@RequestPart("file") List<MultipartFile> fileList, @RequestPart("post") PostCreateRequest postCreateRequest) throws IOException {
+        Post post = postService.create(fileList, postCreateRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
      * 게시글 수정
      *
-     * @param postInputRequest
+     * @param postUpdateRequest
      * @return
      */
     @PutMapping
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostInputRequest postInputRequest) {
-        Post post = postService.update(postInputRequest);
+    public ResponseEntity<PostDto> update(@RequestBody PostUpdateRequest postUpdateRequest) {
+        Post post = postService.update(postUpdateRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
      * 게시글 삭제
      *
-     * @param postInputRequest
+     * @param postDeleteRequest
      * @return
      */
     @DeleteMapping
     @ResponseBody
-    public ResponseEntity delete(@RequestBody PostInputRequest postInputRequest) {
-        postService.delete(postInputRequest);
+    public ResponseEntity delete(@RequestBody PostDeleteRequest postDeleteRequest) {
+        postService.delete(postDeleteRequest);
         return ResponseEntity.ok().build();
     }
 

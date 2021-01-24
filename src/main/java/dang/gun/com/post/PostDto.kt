@@ -1,14 +1,28 @@
 package dang.gun.com.post
 
-import dang.gun.com.user.User
 import java.time.LocalDateTime
 
-data class PostInputRequest(
-        var id : Int,
+data class PostCreateRequest(
         var title: String,
         var content: String,
         var price: Int,
-        var user: User
+        var userId: Int,
+) {
+
+}
+
+data class PostUpdateRequest(
+        var postId: Int,
+        var title: String,
+        var content: String,
+        var price: Int,
+) {
+
+}
+
+data class PostDeleteRequest(
+        var postId: Int,
+        var userId: Int,
 ) {
 
 }
@@ -18,8 +32,8 @@ data class PostDto(
         var title: String?,
         var content: String?,
         var price: Int?,
-        var viewCnt : Int?,
-        var likeCnt : Int?,
+        var viewCnt: Int?,
+        var likeCnt: Int?,
         var userName: String?,
         var detailaddress: String?,
         var createAt: LocalDateTime?,
@@ -40,10 +54,10 @@ data class PostDto(
 }
 
 interface PostListDto {
-    fun getId() : Int;
-    fun getTitle() : String;
-    fun getPrice() :Int;
-    fun getDetailaddress() : String;
-    fun getPath() : String;
-    fun getFilename() : String;
+    fun getId(): Int;
+    fun getTitle(): String;
+    fun getPrice(): Int;
+    fun getDetailaddress(): String;
+    fun getPath(): String;
+    fun getFilename(): String;
 }

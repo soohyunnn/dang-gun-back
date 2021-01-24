@@ -2,6 +2,7 @@ package dang.gun.com.post;
 
 import dang.gun.com.image.ImageService;
 import dang.gun.com.user.User;
+import dang.gun.com.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -20,32 +20,35 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ImageService imageService;
+    private final UserRepository userRepository;
 
 
     /**
      * 게시글 저장
+     *
      * @param fileList
-     * @param postInputRequest
+     * @param postCreateRequest
      * @return
      * @throws IOException
      */
-    public Post create(List<MultipartFile> fileList, PostInputRequest postInputRequest) throws IOException {
+    public Post create(List<MultipartFile> fileList, PostCreateRequest postCreateRequest) throws IOException {
         Post post = new Post();
-        User user = new User();
 
-        user.setId(postInputRequest.getUser().getId());
-        user.setName(postInputRequest.getUser().getName());
+        User user = userRepository.findById(postCreateRequest.getUserId()).orElse(null);
 
-        post.setTitle(postInputRequest.getTitle());
-        post.setContent(postInputRequest.getContent());
-        post.setPrice(postInputRequest.getPrice());
-        post.setUser(postInputRequest.getUser());
+        if (Objects.isNull(user)) throw new IllegalArgumentException();
+
+        post.setTitle(postCreateRequest.getTitle());
+        post.setContent(postCreateRequest.getContent());
+        post.setPrice(postCreateRequest.getPrice());
+        post.setUserId(postCreateRequest.getUserId());
+        post.setUser(user);
 
         //게시글 저장
         Post postResponse = postRepository.save(post);
 
         int postId = postResponse.getId();
-        //이미지 저장 시작
+        //이미지 저장
         imageService.save(fileList, postId);
 
         return postResponse;
@@ -53,17 +56,18 @@ public class PostService {
 
     /**
      * 게시글 수정
-     * @param postInputRequest
+     *
+     * @param postUpdateRequest
      * @return
      */
-    public Post update(PostInputRequest postInputRequest) {
-        Post postResponse = postRepository.findById(postInputRequest.getId()).orElse(null);
+    public Post update(PostUpdateRequest postUpdateRequest) {
+        Post postResponse = postRepository.findById(postUpdateRequest.getPostId()).orElse(null);
 
-        if(Objects.isNull(postResponse)) throw  new IllegalArgumentException();
+        if (Objects.isNull(postResponse)) throw new IllegalArgumentException();
 
-        postResponse.setTitle(postInputRequest.getTitle());
-        postResponse.setContent(postInputRequest.getContent());
-        postResponse.setPrice(postInputRequest.getPrice());
+        postResponse.setTitle(postUpdateRequest.getTitle());
+        postResponse.setContent(postUpdateRequest.getContent());
+        postResponse.setPrice(postUpdateRequest.getPrice());
         postResponse.setModifiedAt(LocalDateTime.now());
         postRepository.save(postResponse);
 
@@ -72,12 +76,13 @@ public class PostService {
 
     /**
      * 게시글 삭제
-     * @param postInputRequest
+     *
+     * @param postDeleteRequest
      */
-    public void delete(PostInputRequest postInputRequest){
-        Post post = postRepository.findById(postInputRequest.getId()).orElse(null);
+    public void delete(PostDeleteRequest postDeleteRequest) {
+        Post post = postRepository.findById(postDeleteRequest.getPostId()).orElse(null);
 
-        if(Objects.isNull(post)) throw new IllegalArgumentException();
+        if (Objects.isNull(post)) throw new IllegalArgumentException();
 
         post.setRemovedAt(LocalDateTime.now());
         postRepository.save(post);
@@ -86,6 +91,7 @@ public class PostService {
 
     /**
      * 상세 게시글 조회
+     *
      * @param postId
      * @return
      */
@@ -95,11 +101,12 @@ public class PostService {
 
     /**
      * 게시글 전체 조회
+     *
      * @return
      */
     public List<PostListDto> findAll() {
         List<PostListDto> postList = postRepository.findPostBySequenceLimit8(1);
-        if(postList.isEmpty()) throw new IllegalArgumentException();
+        if (postList.isEmpty()) throw new IllegalArgumentException();
         return postList;
     }
 

@@ -1,6 +1,5 @@
 package dang.gun.com.image;
 
-import kotlin.collections.ArrayDeque;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,7 @@ public class ImageController {
 
     /**
      * 게시글 상세 이미지 슬라이드 목록 조회
+     *
      * @param postId
      * @return
      */
