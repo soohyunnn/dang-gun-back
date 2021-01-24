@@ -104,8 +104,8 @@ public class PostService {
      *
      * @return
      */
-    public List<PostListDto> findAll() {
-        List<PostListDto> postList = postRepository.findPostBySequenceLimit8(1);
+    public List<PostAllDto> findAll() {
+        List<PostAllDto> postList = postRepository.findPostBySequenceLimit8(1);
         if (postList.isEmpty()) throw new IllegalArgumentException();
         return postList;
     }

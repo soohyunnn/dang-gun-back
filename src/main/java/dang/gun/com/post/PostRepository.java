@@ -17,6 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             " where i.sequence = :sequence" +
             " order by p.id DESC" +
             " limit 8", nativeQuery = true)
-    List<PostListDto> findPostBySequenceLimit8(@Param("sequence") int sequence);
+    List<PostAllDto> findPostBySequenceLimit8(@Param("sequence") int sequence);
 
 }

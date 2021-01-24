@@ -53,7 +53,7 @@ data class PostDto(
     )
 }
 
-interface PostListDto {
+interface PostAllDto {
     fun getId(): Int;
     fun getTitle(): String;
     fun getPrice(): Int;

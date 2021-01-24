@@ -40,12 +40,25 @@ public class Image {
     LocalDateTime removedAt;
     int sequence;
 
-    @Column(name="post_id")
+    @Column(name = "post_id")
     int postId;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="post_Id", referencedColumnName="id", insertable=false, updatable=false)
+    @JoinColumn(name = "post_Id", referencedColumnName = "id", insertable = false, updatable = false)
     Post post;
+
+    public Image() {
+    }
+
+    public Image(String filename, String path, String type, int i, int postId) {
+        this.filename = filename;
+        this.path = path;
+        this.type = type;
+        this.sequence = i;
+        this.postId = postId;
+
+    }
+
 
 }

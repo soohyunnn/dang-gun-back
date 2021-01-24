@@ -20,24 +20,22 @@ public class UserService {
      * @param userSignupDto
      * @return
      */
-    public int signup(UserSignupDto userSignupDto) {
+    public void signup(UserSignupDto userSignupDto) {
         User user = new User();
-        LocalDateTime now = LocalDateTime.now();
 
-        String passwordEncoding = passwordEncoder.encode(userSignupDto.getPassword());
+        String EncodedPassword = passwordEncoder.encode(userSignupDto.getPassword());
 
         user.setEmail(userSignupDto.getEmail());
         user.setName(userSignupDto.getUsername());
-        user.setPrevPassword(passwordEncoding);
-        user.setPassword(passwordEncoding);
+        user.setPrevPassword(EncodedPassword);
+        user.setPassword(EncodedPassword);
         user.setAddressNumber(userSignupDto.getAddressNumber());
         user.setDetailAddress(userSignupDto.getDetailAddress());
-        user.setCreatedAt(now);
+        user.setCreatedAt(LocalDateTime.now());
 
         log.info(user.toString());
 
         userRepository.save(user);
-        return user.getId();
     }
 
     /**
