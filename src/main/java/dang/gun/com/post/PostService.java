@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,48 +23,48 @@ public class PostService {
 
     /**
      * 게시글 저장
-     * @param file
-     * @param postRequest
+     * @param fileList
+     * @param postInputRequest
      * @return
      * @throws IOException
      */
-    public Post create(List<MultipartFile> file, PostCreateRequest postRequest) throws IOException {
+    public Post create(List<MultipartFile> fileList, PostInputRequest postInputRequest) throws IOException {
         Post post = new Post();
         User user = new User();
 
-        user.setId(postRequest.getUser().getId());
-        user.setName(postRequest.getUser().getName());
+        user.setId(postInputRequest.getUser().getId());
+        user.setName(postInputRequest.getUser().getName());
 
-        post.setTitle(postRequest.getTitle());
-        post.setContent(postRequest.getContent());
-        post.setPrice(postRequest.getPrice());
-        post.setUser(postRequest.getUser());
+        post.setTitle(postInputRequest.getTitle());
+        post.setContent(postInputRequest.getContent());
+        post.setPrice(postInputRequest.getPrice());
+        post.setUser(postInputRequest.getUser());
 
         //게시글 저장
         Post postResponse = postRepository.save(post);
 
         int postId = postResponse.getId();
         //이미지 저장 시작
-        imageService.save(file, postId);
+        imageService.save(fileList, postId);
 
         return postResponse;
     }
 
     /**
      * 게시글 수정
-     * @param postRequest
+     * @param postInputRequest
      * @return
      */
-    public Post update(PostCreateRequest postRequest) {
+    public Post update(PostInputRequest postInputRequest) {
 
-        Optional<Post> resultPost = postRepository.findById(postRequest.getId());
+        Optional<Post> resultPost = postRepository.findById(postInputRequest.getId());
 
         if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
 
         resultPost.ifPresent(selectPost -> {
-            selectPost.setTitle(postRequest.getTitle());
-            selectPost.setContent(postRequest.getContent());
-            selectPost.setPrice(postRequest.getPrice());
+            selectPost.setTitle(postInputRequest.getTitle());
+            selectPost.setContent(postInputRequest.getContent());
+            selectPost.setPrice(postInputRequest.getPrice());
             selectPost.setModifiedAt(LocalDateTime.now());
             Post post = postRepository.save(selectPost);
         });
@@ -77,10 +76,10 @@ public class PostService {
 
     /**
      * 게시글 삭제
-     * @param postRequest
+     * @param postInputRequest
      */
-    public void delete(PostCreateRequest postRequest){
-        Optional<Post> resultPost = postRepository.findById(postRequest.getId());
+    public void delete(PostInputRequest postInputRequest){
+        Optional<Post> resultPost = postRepository.findById(postInputRequest.getId());
 
         if(!resultPost.isPresent()) throw new IllegalArgumentException();    //null일 경우 따로 에러 처리
 
@@ -103,8 +102,8 @@ public class PostService {
      * 게시글 전체 조회
      * @return
      */
-    public List<PostAllDto> findAll() {
-        List<PostAllDto> postList = postRepository.findPostBySequenceLimit8Inner(1);
+    public List<PostListDto> findAll() {
+        List<PostListDto> postList = postRepository.findPostBySequenceLimit8(1);
         if(postList == null) throw new IllegalArgumentException();
         return postList;
     }

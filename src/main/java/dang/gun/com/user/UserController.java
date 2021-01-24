@@ -17,13 +17,13 @@ public class UserController {
     /**
      * 회원가입
      *
-     * @param userDto
+     * @param userSignupDto
      * @return
      */
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity signup(@RequestBody UserSignupDto userDto) {
-        userService.signup(userDto);
+    public ResponseEntity signup(@RequestBody UserSignupDto userSignupDto) {
+        userService.signup(userSignupDto);
         return ResponseEntity.ok("SUCCESS");
     }
 

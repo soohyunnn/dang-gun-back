@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,39 +20,39 @@ public class PostController {
     /**
      * 게시글 등록
      *
-     * @param //postRequest
+     * @param postInputRequest
      * @return
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity create1(@RequestPart("file") List<MultipartFile> file, @RequestPart("post") PostCreateRequest postRequest) throws IOException {
-        Post post = postService.create(file, postRequest);
+    public ResponseEntity create(@RequestPart("file") List<MultipartFile> fileList, @RequestPart("post") PostInputRequest postInputRequest) throws IOException {
+        Post post = postService.create(fileList, postInputRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
      * 게시글 수정
      *
-     * @param postRequest
+     * @param postInputRequest
      * @return
      */
     @PutMapping
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostCreateRequest postRequest) {
-        Post post = postService.update(postRequest);
+    public ResponseEntity<PostDto> update(@RequestBody PostInputRequest postInputRequest) {
+        Post post = postService.update(postInputRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
      * 게시글 삭제
      *
-     * @param postRequest
+     * @param postInputRequest
      * @return
      */
     @DeleteMapping
     @ResponseBody
-    public ResponseEntity delete(@RequestBody PostCreateRequest postRequest) {
-        postService.delete(postRequest);
+    public ResponseEntity delete(@RequestBody PostInputRequest postInputRequest) {
+        postService.delete(postInputRequest);
         return ResponseEntity.ok("SUCCESS");
     }
 
@@ -76,7 +75,7 @@ public class PostController {
      */
     @GetMapping
     public ResponseEntity<List> findAll() {
-        List<PostAllDto> postList = postService.findAll();
+        List<PostListDto> postList = postService.findAll();
         return ResponseEntity.ok(postList);
     }
 }

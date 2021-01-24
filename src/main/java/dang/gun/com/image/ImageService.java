@@ -21,22 +21,22 @@ public class ImageService {
      * AWS s3에 이미지 저장
      * 1. AWS s3에 저장 후 저장된 url 반환
      * 2. 반환된 url과 이미지에 관한 정보를 DB에 저장
-     * @param file
+     * @param fileList
      * @param postId
      * @throws IOException
      */
-    public void save(List<MultipartFile> file, int postId) throws IOException {
+    public void save(List<MultipartFile> fileList, int postId) throws IOException {
         int cnt = 1;
-        for (int i = 0; i < file.size(); i++) {
+        for (int i = 0; i < fileList.size(); i++) {
             Image image = new Image();
-            String imgPath = s3Uploader.upload(file.get(i));
+            String imgPath = s3Uploader.upload(fileList.get(i));
 
             Post post = new Post();
             post.setId(postId);
 
-            image.setName(file.get(i).getOriginalFilename());
+            image.setFilename(fileList.get(i).getOriginalFilename());
             image.setPath(imgPath);
-            image.setType(file.get(i).getContentType());
+            image.setType(fileList.get(i).getContentType());
             image.setSequence(cnt++);
             image.setPost(post);
             imageRepository.save(image);
@@ -45,11 +45,11 @@ public class ImageService {
 
     /**
      * 게시글 상세 이미지 슬라이드 목록 조회
-     * @param id
+     * @param postId
      * @return
      */
-    public List<Image> findAll(int id) {
-        List<Image> imageList = imageRepository.getByPost_id(id);
+    public List<Image> findAllByPostId(int postId) {
+        List<Image> imageList = imageRepository.getByPostId(postId);
         return imageList;
     }
 }

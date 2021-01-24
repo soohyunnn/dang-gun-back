@@ -24,17 +24,15 @@ public class UserService {
         User user = new User();
         LocalDateTime now = LocalDateTime.now();
 
-        String passwordEncoding = passwordEncoder.encode(userSignupDto.password);
+        String passwordEncoding = passwordEncoder.encode(userSignupDto.getPassword());
 
-        user.setEmail(userSignupDto.email);
-        user.setName(userSignupDto.username);
+        user.setEmail(userSignupDto.getEmail());
+        user.setName(userSignupDto.getUsername());
         user.setPrevPassword(passwordEncoding);
         user.setPassword(passwordEncoding);
-        user.setAddressNumber(userSignupDto.addressNumber);
-        user.setDetailAddress(userSignupDto.detailAddress);
+        user.setAddressNumber(userSignupDto.getAddressNumber());
+        user.setDetailAddress(userSignupDto.getDetailAddress());
         user.setCreatedAt(now);
-        user.setModifiedAt(now);
-        user.setRemovedAt(now);
 
         log.info(user.toString());
 
@@ -57,9 +55,9 @@ public class UserService {
      * @return
      */
     public User signin(UserSignupDto userSingupDto) {
-        User user = (User) userRepository.findByEmail(userSingupDto.email);
+        User user = (User) userRepository.findByEmail(userSingupDto.getEmail());
         if (user == null) throw new IllegalArgumentException();
-        passwordEncoder.matches(userSingupDto.password, user.getPassword());
+        passwordEncoder.matches(userSingupDto.getPassword(), user.getPassword());
         return user;
 
     }

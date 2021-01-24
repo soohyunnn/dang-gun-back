@@ -1,6 +1,5 @@
 package dang.gun.com.post;
 
-import dang.gun.com.image.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             " where i.sequence = :sequence" +
             " order by p.id DESC" +
             " limit 8", nativeQuery = true)
-    List<PostAllDto> findPostBySequenceLimit8Inner(@Param("sequence") int order);
+    List<PostListDto> findPostBySequenceLimit8(@Param("sequence") int sequence);
 
 }

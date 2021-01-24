@@ -19,12 +19,12 @@ public class ImageController {
 
     /**
      * 게시글 상세 이미지 슬라이드 목록 조회
-     * @param id
+     * @param postId
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<List> findAll(@PathVariable(name = "id") int id) {
-        List<Image> imageList = imageService.findAll(id);
+    public ResponseEntity<List> findAllByPostId(@PathVariable(name = "id") int postId) {
+        List<Image> imageList = imageService.findAllByPostId(postId);
         List<ImageDto> responseImageList = new ArrayDeque<>();
 
         for (Image image : imageList) {

@@ -29,20 +29,23 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(name = "filename")
-    String name;
+    String filename;
     String path;
     String type;
     @Column(name = "created_at")
     LocalDateTime createdAt = LocalDateTime.now();
-    @Column(name = "modifiedAt")
-    LocalDateTime modified_at;
-    @Column(name = "removedAt")
-    LocalDateTime removed_at;
+    @Column(name = "modified_at")
+    LocalDateTime modifiedAt;
+    @Column(name = "removed_at")
+    LocalDateTime removedAt;
     int sequence;
+
+    @Column(name="post_id")
+    int postId;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name="post_Id", referencedColumnName="id", insertable=false, updatable=false)
     Post post;
 
     public Post getPost() {
