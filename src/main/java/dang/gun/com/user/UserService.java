@@ -1,5 +1,6 @@
 package dang.gun.com.user;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,49 +9,43 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public int signup(UserSingupDto userSingupDto) {
+    /**
+     * 회원가입
+     * @param userSignupDto
+     * @return
+     */
+    public void signup(UserSignupDto userSignupDto) {
         User user = new User();
-        LocalDateTime now = LocalDateTime.now();
 
-        String passwordEncoding = passwordEncoder.encode(userSingupDto.password);
+        String EncodedPassword = passwordEncoder.encode(userSignupDto.getPassword());
 
-        user.setEmail(userSingupDto.email);
-        user.setUsername(userSingupDto.username);
-        user.setPrevPassword(passwordEncoding);
-        user.setPassword(passwordEncoding);
-        user.setAddressNumber(userSingupDto.addressNumber);
-        user.setDetailAddress(userSingupDto.detailAddress);
-        user.setCreatedAt(now);
-        user.setModifiedAt(now);
-        user.setRemovedAt(now);
+        user.setEmail(userSignupDto.getEmail());
+        user.setName(userSignupDto.getUsername());
+        user.setPrevPassword(EncodedPassword);
+        user.setPassword(EncodedPassword);
+        user.setAddressNumber(userSignupDto.getAddressNumber());
+        user.setDetailAddress(userSignupDto.getDetailAddress());
+        user.setCreatedAt(LocalDateTime.now());
 
         log.info(user.toString());
 
         userRepository.save(user);
-        return user.getId();
     }
 
+    /**
+     * 중복회원조회
+     * @param email
+     * @return
+     */
     public Boolean isExistingUserByEmail(String email) {
-
         return userRepository.existsByEmail(email);
     }
 
-    public User signin(UserSingupDto userSingupDto) {
-        User user = (User) userRepository.findByEmail(userSingupDto.email);
-        if (user == null) throw new IllegalArgumentException();
-        passwordEncoder.matches(userSingupDto.password, user.getPassword());
-        return user;
-
-    }
 
 }

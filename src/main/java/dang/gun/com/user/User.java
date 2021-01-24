@@ -34,7 +34,7 @@ public class User {
     @Column(unique = true)
     String email;
     @Column(unique = true)
-    String username;
+    String name;
     String password;
     @Column(name = "prev_password")
     String prevPassword;
@@ -51,5 +51,13 @@ public class User {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> posts = new ArrayList<Post>();
+    public List<Post> posts = new ArrayList<Post>();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
 }

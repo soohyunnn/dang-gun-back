@@ -10,23 +10,55 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "image")
 @Table(name = "image")
 public class Image {
 
+
+    /**
+     * id : 이미지 고유 번호
+     * filename : 파일 이름
+     * path : 파일 경로
+     * type : 파일 형식
+     * created_at : 등록날짜
+     * modified_at : 수정날짜
+     * removed_at : 삭제날짜
+     * post_id : 게시글 고유번호(외래키 , post)
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String imgname;
-    String imgpath;
-    String imgtype;
-    LocalDateTime created_at;
-    LocalDateTime modified_at;
-    LocalDateTime removed_at;
+    @Column(name = "filename")
+    String filename;
+    String path;
+    String type;
+    @Column(name = "created_at")
+    LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "modified_at")
+    LocalDateTime modifiedAt;
+    @Column(name = "removed_at")
+    LocalDateTime removedAt;
+    int sequence;
+
+    @Column(name = "post_id")
+    int postId;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_Id", referencedColumnName = "id", insertable = false, updatable = false)
     Post post;
+
+    public Image() {
+    }
+
+    public Image(String filename, String path, String type, int i, int postId) {
+        this.filename = filename;
+        this.path = path;
+        this.type = type;
+        this.sequence = i;
+        this.postId = postId;
+
+    }
+
 
 }
