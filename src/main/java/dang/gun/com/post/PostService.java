@@ -60,9 +60,8 @@ public class PostService {
      * @param postUpdateRequest
      * @return
      */
-    public Post update(PostUpdateRequest postUpdateRequest) {
+    public Post update(List<MultipartFile> fileList, PostUpdateRequest postUpdateRequest) throws IOException {
         Post postResponse = postRepository.findById(postUpdateRequest.getPostId()).orElse(null);
-
         if (Objects.isNull(postResponse)) throw new IllegalArgumentException();
 
         postResponse.setTitle(postUpdateRequest.getTitle());
@@ -70,6 +69,10 @@ public class PostService {
         postResponse.setPrice(postUpdateRequest.getPrice());
         postResponse.setModifiedAt(LocalDateTime.now());
         postRepository.save(postResponse);
+
+        int postId = postResponse.getId();
+        //이미지 저장
+        imageService.save(fileList, postId);
 
         return postResponse;
     }

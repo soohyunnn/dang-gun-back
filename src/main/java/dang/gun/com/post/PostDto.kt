@@ -16,6 +16,7 @@ data class PostUpdateRequest(
         var title: String,
         var content: String,
         var price: Int,
+        var userId: Int,
 ) {
 
 }

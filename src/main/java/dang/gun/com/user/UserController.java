@@ -38,4 +38,5 @@ public class UserController {
     public ResponseEntity<Boolean> isExistingUserByEmail(@RequestParam(value = "email") String email) {
         return ResponseEntity.ok(userService.isExistingUserByEmail(email));
     }
+
 }

@@ -38,8 +38,8 @@ public class PostController {
      */
     @PutMapping
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostUpdateRequest postUpdateRequest) {
-        Post post = postService.update(postUpdateRequest);
+    public ResponseEntity<PostDto> update(@RequestPart("file") List<MultipartFile> fileList, @RequestPart("post")  PostUpdateRequest postUpdateRequest) throws IOException {
+        Post post = postService.update(fileList, postUpdateRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
