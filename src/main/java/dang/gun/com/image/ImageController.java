@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/images")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImageController {
 
     private final ImageService imageService;
