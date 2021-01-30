@@ -53,8 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // csrf 보안 토큰 disable처리.
                 .authorizeRequests()   //요청에 대한 권한을 지정할 수 있다.
                 .antMatchers("/authenticate", "/api/member").permitAll()  //접근을 전부 허용
-                .antMatchers("/post/create", "/").hasAnyRole("ROLE_USER")
-                .anyRequest().authenticated()//인증이 되어야 한다는 뜻이다.
+                //.antMatchers("/posts", "/").anonymous()
+                //.antMatchers("/post/create")
+                //.authenticated()//인증이 되어야 한다는 뜻이다.
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)

@@ -34,6 +34,7 @@ public class UserService {
         user.setAddressNumber(userSignupDto.getAddressNumber());
         user.setDetailAddress(userSignupDto.getDetailAddress());
         user.setCreatedAt(LocalDateTime.now());
+        user.setRole("ROLE_USER");
 
         log.info(user.toString());
 

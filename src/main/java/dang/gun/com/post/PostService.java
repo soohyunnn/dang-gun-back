@@ -71,8 +71,8 @@ public class PostService {
         postRepository.save(postResponse);
 
         int postId = postResponse.getId();
-        //이미지 저장
-        imageService.save(fileList, postId);
+        //이미지 수정
+        imageService.update(fileList, postId);
 
         return postResponse;
     }
