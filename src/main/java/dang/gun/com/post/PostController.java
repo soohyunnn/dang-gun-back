@@ -44,14 +44,13 @@ public class PostController {
 
     /**
      * 게시글 삭제
-     *
-     * @param postDeleteRequest
+     * @param postId
+     * @param userEmail
      * @return
      */
     @DeleteMapping
-    @ResponseBody
-    public ResponseEntity delete(@RequestBody PostDeleteRequest postDeleteRequest) {
-        postService.delete(postDeleteRequest);
+    public ResponseEntity delete(@RequestParam(name = "postId") int postId, @RequestParam(name = "userEmail") String userEmail) {
+        postService.delete(postId, userEmail);
         return ResponseEntity.ok().build();
     }
 

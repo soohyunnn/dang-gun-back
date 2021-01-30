@@ -6,6 +6,7 @@ import dang.gun.com.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,14 +35,17 @@ public class PostService {
     public Post create(List<MultipartFile> fileList, PostCreateRequest postCreateRequest) throws IOException {
         Post post = new Post();
 
-        User user = userRepository.findById(postCreateRequest.getUserId()).orElse(null);
+        User user = userRepository.findByEmail(postCreateRequest.getUserEmail()).orElse(null);
+
+        log.info("userEmail", postCreateRequest.getUserEmail());
+        log.info("userId", user.getId());
 
         if (Objects.isNull(user)) throw new IllegalArgumentException();
 
         post.setTitle(postCreateRequest.getTitle());
         post.setContent(postCreateRequest.getContent());
         post.setPrice(postCreateRequest.getPrice());
-        post.setUserId(postCreateRequest.getUserId());
+        post.setUserId(user.getId());
         post.setUser(user);
 
         //게시글 저장
@@ -79,11 +83,11 @@ public class PostService {
 
     /**
      * 게시글 삭제
-     *
-     * @param postDeleteRequest
+     * @param postId
+     * @param userEamil
      */
-    public void delete(PostDeleteRequest postDeleteRequest) {
-        Post post = postRepository.findById(postDeleteRequest.getPostId()).orElse(null);
+    public void delete(int postId,  String userEamil) {
+        Post post = postRepository.findById(postId).orElse(null);
 
         if (Objects.isNull(post)) throw new IllegalArgumentException();
 

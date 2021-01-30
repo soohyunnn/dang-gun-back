@@ -61,8 +61,8 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     public List<Post> posts = new ArrayList<Post>();
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
     public String getDetailAddress() {

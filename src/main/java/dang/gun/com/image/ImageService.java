@@ -58,7 +58,6 @@ public class ImageService {
             image.setPath(imgPath);
             image.setType(fileList.get(i).getContentType());
 
-            //Image image = new Image(fileList.get(i).getOriginalFilename(), imgPath, fileList.get(i).getContentType(), i + 1, postId);
             imageRepository.save(image);
         }
     }

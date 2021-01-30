@@ -14,7 +14,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             " from image i" +
             " inner join post p on i.post_id = p.id" +
             " inner join user u on u.id = p.user_id" +
-            " where i.sequence = :sequence" +
+            " where i.sequence = :sequence and p.removed_at is null" +
             " order by p.id DESC" +
             " limit 8", nativeQuery = true)
     List<PostAllDto> findPostBySequenceLimit8(@Param("sequence") int sequence);

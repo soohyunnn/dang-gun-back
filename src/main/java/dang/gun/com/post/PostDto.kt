@@ -6,7 +6,7 @@ data class PostCreateRequest(
         var title: String,
         var content: String,
         var price: Int,
-        var userId: Int,
+        var userEmail: String,
 ) {
 
 }
@@ -23,7 +23,7 @@ data class PostUpdateRequest(
 
 data class PostDeleteRequest(
         var postId: Int,
-        var userId: Int,
+        var userEmail: String,
 ) {
 
 }
@@ -35,7 +35,7 @@ data class PostDto(
         var price: Int?,
         var viewCnt: Int?,
         var likeCnt: Int?,
-        var userName: String?,
+        var userEmail : String?,
         var detailaddress: String?,
         var createAt: LocalDateTime?,
         var modifiedAt: LocalDateTime?,
@@ -47,7 +47,7 @@ data class PostDto(
             price = post.price,
             viewCnt = post.viewCnt,
             likeCnt = post.likeCnt,
-            userName = post.getUser().name,
+            userEmail = post.getUser().email,
             detailaddress = post.getUser().detailAddress,
             createAt = post.createdAt,
             modifiedAt = post.modifiedAt
