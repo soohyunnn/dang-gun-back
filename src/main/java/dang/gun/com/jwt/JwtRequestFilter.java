@@ -1,7 +1,6 @@
 package dang.gun.com.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,15 +22,14 @@ import java.util.List;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private  JwtUserDetailsService jwtUserDetailService;
+    private JwtUserDetailsService jwtUserDetailService;
 
     @Autowired
-    private  JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     private static final List<String> EXCLUDE_URL =
             Collections.unmodifiableList(
                     Arrays.asList(
-                            "/api/member",
                             "/authenticate"
                     ));
 

@@ -49,11 +49,13 @@ public class ImageService {
     public void update(List<MultipartFile> fileList, int postId) throws IOException {
         for (int i = 0; i < fileList.size(); i++) {
             String imgPath = s3Uploader.upload(fileList.get(i));
+
             Post post = postRepository.findById(postId).orElse(null);
             if (Objects.isNull(post)) throw new IllegalArgumentException();
 
             Image image = imageRepository.findByPostId(post.getId());
             if (Objects.isNull(image)) throw new IllegalArgumentException();
+
             image.setFilename(fileList.get(i).getOriginalFilename());
             image.setPath(imgPath);
             image.setType(fileList.get(i).getContentType());

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -88,8 +89,12 @@ public class PostService {
      */
     public void delete(int postId,  String userEamil) {
         Post post = postRepository.findById(postId).orElse(null);
-
         if (Objects.isNull(post)) throw new IllegalArgumentException();
+
+        Optional<User> user = userRepository.findByEmail(userEamil);
+        if(post.getUserId() != user.get().getId()){
+            throw new IllegalArgumentException();   //전달받은 user의 ID와 삭제하려는 Post를 작성한 user의 ID가 다르면 에러 발생
+        }
 
         post.setRemovedAt(LocalDateTime.now());
         postRepository.save(post);
