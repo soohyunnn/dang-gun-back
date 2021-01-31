@@ -9,6 +9,14 @@ group = 'dang.gun.com'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+apply plugin: 'io.spring.dependency-management'
+
+bootJar{
+    archivesBaseName = '-'
+    archiveFileName = 'dang-gun-back-dev.jar'
+    archiveVersion = "0.0.0"
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -35,6 +43,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compile("org.springframework.boot:spring-boot-starter-websocket") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
 }
 
 test {
