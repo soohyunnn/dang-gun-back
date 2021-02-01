@@ -67,8 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        //corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.addAllowedOrigin("https://master.dmvpyy4apbm7e.amplifyapp.com");
+        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        //corsConfiguration.addAllowedOrigin("https://master.dmvpyy4apbm7e.amplifyapp.com");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);

@@ -39,14 +39,14 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public dang.gun.com.user.User authenticateByEmailAndPassword(String email, String password) {
-        dang.gun.com.user.User member = userRepository.findByEmail(email)
+        dang.gun.com.user.User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
 
-        if (!passwordEncoder.matches(password, member.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Password not matched");
         }
 
-        return member;
+        return user;
     }
 
 }
