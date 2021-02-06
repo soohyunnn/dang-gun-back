@@ -35,7 +35,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         }
 
-        return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return new User(user.getUsername(), user.getPassword(), grantedAuthorities);  //-> userDetail을 return하기!
     }
 
     public dang.gun.com.user.User authenticateByEmailAndPassword(String email, String password) {

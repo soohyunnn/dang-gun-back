@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable() // csrf 보안 토큰 disable처리.
                 .authorizeRequests()   //요청에 대한 권한을 지정할 수 있다.
-                .antMatchers("/authenticate").permitAll()  //접근을 전부 허용
+                .antMatchers("/post").hasAnyRole("USER", "ADMIN")
+                .anyRequest().permitAll() //접근을 전부 허용
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -67,8 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        //corsConfiguration.addAllowedOrigin("https://master.dmvpyy4apbm7e.amplifyapp.com");
+        //corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("http://dang-gun-front.s3-website.ap-northeast-2.amazonaws.com/");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);
