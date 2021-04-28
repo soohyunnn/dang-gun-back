@@ -1,5 +1,6 @@
 package dang.gun.com.user;
 
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ public class UserService {
 
     /**
      * 회원가입
+     *
      * @param userSignupDto
      * @return
      */
@@ -32,6 +34,7 @@ public class UserService {
         user.setAddressNumber(userSignupDto.getAddressNumber());
         user.setDetailAddress(userSignupDto.getDetailAddress());
         user.setCreatedAt(LocalDateTime.now());
+        user.setRole("ROLE_USER");
 
         log.info(user.toString());
 
@@ -40,6 +43,7 @@ public class UserService {
 
     /**
      * 중복회원조회
+     *
      * @param email
      * @return
      */

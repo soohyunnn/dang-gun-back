@@ -6,12 +6,14 @@ import dang.gun.com.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -34,14 +36,17 @@ public class PostService {
     public Post create(List<MultipartFile> fileList, PostCreateRequest postCreateRequest) throws IOException {
         Post post = new Post();
 
-        User user = userRepository.findById(postCreateRequest.getUserId()).orElse(null);
+        User user = userRepository.findByEmail(postCreateRequest.getUserEmail()).orElse(null);
+
+        log.info("userEmail", postCreateRequest.getUserEmail());
+        log.info("userId", user.getId());
 
         if (Objects.isNull(user)) throw new IllegalArgumentException();
 
         post.setTitle(postCreateRequest.getTitle());
         post.setContent(postCreateRequest.getContent());
         post.setPrice(postCreateRequest.getPrice());
-        post.setUserId(postCreateRequest.getUserId());
+        post.setUserId(user.getId());
         post.setUser(user);
 
         //게시글 저장
@@ -60,9 +65,8 @@ public class PostService {
      * @param postUpdateRequest
      * @return
      */
-    public Post update(PostUpdateRequest postUpdateRequest) {
+    public Post update(List<MultipartFile> fileList, PostUpdateRequest postUpdateRequest) throws IOException {
         Post postResponse = postRepository.findById(postUpdateRequest.getPostId()).orElse(null);
-
         if (Objects.isNull(postResponse)) throw new IllegalArgumentException();
 
         postResponse.setTitle(postUpdateRequest.getTitle());
@@ -71,18 +75,26 @@ public class PostService {
         postResponse.setModifiedAt(LocalDateTime.now());
         postRepository.save(postResponse);
 
+        int postId = postResponse.getId();
+        //이미지 수정
+        imageService.update(fileList, postId);
+
         return postResponse;
     }
 
     /**
      * 게시글 삭제
-     *
-     * @param postDeleteRequest
+     * @param postId
+     * @param userEamil
      */
-    public void delete(PostDeleteRequest postDeleteRequest) {
-        Post post = postRepository.findById(postDeleteRequest.getPostId()).orElse(null);
-
+    public void delete(int postId,  String userEamil) {
+        Post post = postRepository.findById(postId).orElse(null);
         if (Objects.isNull(post)) throw new IllegalArgumentException();
+
+        Optional<User> user = userRepository.findByEmail(userEamil);
+        if(post.getUserId() != user.get().getId()){
+            throw new IllegalArgumentException();   //전달받은 user의 ID와 삭제하려는 Post를 작성한 user의 ID가 다르면 에러 발생
+        }
 
         post.setRemovedAt(LocalDateTime.now());
         postRepository.save(post);

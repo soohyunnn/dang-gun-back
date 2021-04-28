@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/users")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -38,4 +37,5 @@ public class UserController {
     public ResponseEntity<Boolean> isExistingUserByEmail(@RequestParam(value = "email") String email) {
         return ResponseEntity.ok(userService.isExistingUserByEmail(email));
     }
+
 }

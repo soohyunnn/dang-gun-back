@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
 
     private final PostService postService;
@@ -38,21 +37,20 @@ public class PostController {
      */
     @PutMapping
     @ResponseBody
-    public ResponseEntity<PostDto> update(@RequestBody PostUpdateRequest postUpdateRequest) {
-        Post post = postService.update(postUpdateRequest);
+    public ResponseEntity<PostDto> update(@RequestPart("file") List<MultipartFile> fileList, @RequestPart("post")  PostUpdateRequest postUpdateRequest) throws IOException {
+        Post post = postService.update(fileList, postUpdateRequest);
         return ResponseEntity.ok(new PostDto(post));
     }
 
     /**
      * 게시글 삭제
-     *
-     * @param postDeleteRequest
+     * @param postId
+     * @param userEmail
      * @return
      */
     @DeleteMapping
-    @ResponseBody
-    public ResponseEntity delete(@RequestBody PostDeleteRequest postDeleteRequest) {
-        postService.delete(postDeleteRequest);
+    public ResponseEntity delete(@RequestParam(name = "postId") int postId, @RequestParam(name = "userEmail") String userEmail) {
+        postService.delete(postId, userEmail);
         return ResponseEntity.ok().build();
     }
 
